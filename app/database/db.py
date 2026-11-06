@@ -5,7 +5,7 @@ from sqlmodel import SQLModel, Session, create_engine
 from app.database import models
 
 DB_PATH = Path(__file__).resolve().parents[2] / "database.db"
-engine = create_engine(os.getenv("DATABASE_URL", f"sqlite:///{DB_PATH}"), echo=True)
+engine = create_engine(os.getenv("DATABASE_URL", f"sqlite:///{DB_PATH}"), echo=os.getenv("SQL_ECHO") == "1", connect_args={"check_same_thread": False, "timeout": 30})
 
 @event.listens_for(engine, "connect")
 def enable_foreign_keys(connection, _):
