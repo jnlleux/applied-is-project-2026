@@ -88,6 +88,33 @@
         "reveal": "always",
         "panel": "dedicated"
       }
+    },
+    {
+      "label": "6 — Лабораторная 7: запустить pytest",
+      "type": "process",
+      "command": "${workspaceFolder}/.venv/bin/python",
+      "args": [
+        "-m",
+        "pytest",
+        "-v"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "7 — Лабораторная 6: проверить Compose",
+      "type": "process",
+      "command": "docker",
+      "args": [
+        "compose",
+        "config"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
     }
   ]
 }
