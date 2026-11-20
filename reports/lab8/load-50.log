@@ -1,0 +1,23 @@
+[2026-11-20 10:34:44,824] MacBook-Air-Zanella/INFO/locust.main: Starting Locust 2.47.0
+[2026-11-20 10:34:44,825] MacBook-Air-Zanella/INFO/locust.main: Run time limit set to 180 seconds
+[2026-11-20 10:34:44,826] MacBook-Air-Zanella/INFO/locust.runners: Ramping to 50 users at a rate of 50.00 per second
+[2026-11-20 10:34:44,828] MacBook-Air-Zanella/INFO/locust.runners: All users spawned: {"CatalogUser": 50} (50 total users)
+[2026-11-20 10:37:44,610] MacBook-Air-Zanella/INFO/locust.main: --run-time limit reached, shutting down
+[2026-11-20 10:37:44,676] MacBook-Air-Zanella/INFO/locust.main: Shutting down (exit code 0)
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+GET      GET cars                                                                       14643     0(0.00%) |      3       0      79      3 |   81.45        0.00
+GET      GET categories                                                                  9988     0(0.00%) |      3       0      55      3 |   55.56        0.00
+GET      GET filtered cars                                                               4890     0(0.00%) |      3       0      42      3 |   27.20        0.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                     29521     0(0.00%) |      3       0      79      3 |  164.21        0.00
+
+Response time percentiles (approximated)
+Type     Name                                                                                  50%    66%    75%    80%    90%    95%    98%    99%  99.9% 99.99%   100% # reqs
+--------|--------------------------------------------------------------------------------|--------|------|------|------|------|------|------|------|------|------|------|------
+GET      GET cars                                                                                3      3      4      4      6      7      9     12     35     55     80  14643
+GET      GET categories                                                                          3      3      4      4      5      7      9     13     34     56     56   9988
+GET      GET filtered cars                                                                       3      4      4      5      6      7     10     14     31     43     43   4890
+--------|--------------------------------------------------------------------------------|--------|------|------|------|------|------|------|------|------|------|------|------
+         Aggregated                                                                              3      3      4      4      6      7      9     13     33     55     80  29521
+

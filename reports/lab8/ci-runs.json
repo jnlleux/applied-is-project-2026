@@ -1,0 +1,11 @@
+{
+  "initial_success": 44681675368,
+  "intentional_failure": 44681866937,
+  "corrected_demo": 44682094791,
+  "pool_fix_success": {
+    "id": 44683013694,
+    "conclusion": "success",
+    "url": "https://github.com/jnlleux/applied-is-project-2026/actions/runs/44683013694",
+    "sha": "b38289cf84d8bf0daaa4226b9f9c176f51075d94"
+  }
+}

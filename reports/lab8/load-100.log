@@ -1,0 +1,31 @@
+[2026-11-20 10:37:45,484] MacBook-Air-Zanella/INFO/locust.main: Starting Locust 2.47.0
+[2026-11-20 10:37:45,485] MacBook-Air-Zanella/INFO/locust.main: Run time limit set to 180 seconds
+[2026-11-20 10:37:45,486] MacBook-Air-Zanella/INFO/locust.runners: Ramping to 100 users at a rate of 100.00 per second
+[2026-11-20 10:37:45,489] MacBook-Air-Zanella/INFO/locust.runners: All users spawned: {"CatalogUser": 100} (100 total users)
+[2026-11-20 10:40:45,318] MacBook-Air-Zanella/INFO/locust.main: --run-time limit reached, shutting down
+[2026-11-20 10:40:45,383] MacBook-Air-Zanella/INFO/locust.main: Shutting down (exit code 1)
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+GET      GET cars                                                                       24676    16(0.06%) |     57       0   30203      2 |  137.22        0.09
+GET      GET categories                                                                 16559    17(0.10%) |     62       0   30204      2 |   92.08        0.09
+GET      GET filtered cars                                                               8276     7(0.08%) |     82       0   30198      2 |   46.02        0.04
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                     49511    40(0.08%) |     63       0   30204      2 |  275.33        0.22
+
+Response time percentiles (approximated)
+Type     Name                                                                                  50%    66%    75%    80%    90%    95%    98%    99%  99.9% 99.99%   100% # reqs
+--------|--------------------------------------------------------------------------------|--------|------|------|------|------|------|------|------|------|------|------|------
+GET      GET cars                                                                                2      2      3      3      4      5      8     13  30000  30000  30000  24676
+GET      GET categories                                                                          2      2      2      3      4      5      8     14  30000  30000  30000  16559
+GET      GET filtered cars                                                                       2      2      3      3      4      5      8     17  30000  30000  30000   8276
+--------|--------------------------------------------------------------------------------|--------|------|------|------|------|------|------|------|------|------|------|------
+         Aggregated                                                                              2      2      3      3      4      5      8     14  30000  30000  30000  49511
+
+Error report
+# occurrences      Error                                                                                               
+------------------|---------------------------------------------------------------------------------------------------------------------------------------------
+17                 GET GET categories: HTTPError('500 Server Error: Internal Server Error for url: GET categories')    
+16                 GET GET cars: HTTPError('500 Server Error: Internal Server Error for url: GET cars')                
+7                  GET GET filtered cars: HTTPError('500 Server Error: Internal Server Error for url: GET filtered cars')
+------------------|---------------------------------------------------------------------------------------------------------------------------------------------
+

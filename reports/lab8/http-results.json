@@ -1,0 +1,150 @@
+[
+  {
+    "method": "GET",
+    "path": "/categories",
+    "expected": 200,
+    "actual": 200,
+    "body": [],
+    "passed": true
+  },
+  {
+    "method": "POST",
+    "path": "/categories",
+    "expected": 201,
+    "actual": 201,
+    "body": {
+      "name": "HTTP example",
+      "id": 1,
+      "daily_rate": 1000
+    },
+    "passed": true
+  },
+  {
+    "method": "PUT",
+    "path": "/categories/1",
+    "expected": 200,
+    "actual": 200,
+    "body": {
+      "name": "HTTP updated",
+      "id": 1,
+      "daily_rate": 2000
+    },
+    "passed": true
+  },
+  {
+    "method": "GET",
+    "path": "/categories/1",
+    "expected": 200,
+    "actual": 200,
+    "body": {
+      "name": "HTTP updated",
+      "id": 1,
+      "daily_rate": 2000
+    },
+    "passed": true
+  },
+  {
+    "method": "POST",
+    "path": "/categories",
+    "expected": 422,
+    "actual": 422,
+    "body": {
+      "detail": [
+        {
+          "loc": [
+            "body",
+            "name"
+          ],
+          "type": "missing",
+          "msg": "Field required"
+        },
+        {
+          "loc": [
+            "body",
+            "daily_rate"
+          ],
+          "type": "missing",
+          "msg": "Field required"
+        }
+      ]
+    },
+    "passed": true
+  },
+  {
+    "method": "POST",
+    "path": "/categories",
+    "expected": 400,
+    "actual": 400,
+    "body": {
+      "detail": [
+        {
+          "loc": [
+            "body",
+            1
+          ],
+          "type": "json_invalid",
+          "msg": "JSON decode error"
+        }
+      ]
+    },
+    "passed": true
+  },
+  {
+    "method": "GET",
+    "path": "/clients/9999",
+    "expected": 404,
+    "actual": 404,
+    "body": {
+      "detail": "Запись не найдена"
+    },
+    "passed": true
+  },
+  {
+    "method": "GET",
+    "path": "/clients",
+    "expected": 401,
+    "actual": 401,
+    "body": {
+      "detail": "Неверные учётные данные"
+    },
+    "passed": true
+  },
+  {
+    "method": "GET",
+    "path": "/auth/me",
+    "expected": 401,
+    "actual": 401,
+    "body": {
+      "detail": "Неверные учётные данные"
+    },
+    "passed": true
+  },
+  {
+    "method": "DELETE",
+    "path": "/categories/1",
+    "expected": 403,
+    "actual": 403,
+    "body": {
+      "detail": "Недостаточно прав"
+    },
+    "passed": true
+  },
+  {
+    "method": "DELETE",
+    "path": "/categories/1",
+    "expected": 204,
+    "actual": 204,
+    "body": null,
+    "passed": true
+  },
+  {
+    "method": "GET",
+    "path": "/categories/1",
+    "expected": 404,
+    "actual": 404,
+    "body": {
+      "detail": "Запись не найдена"
+    },
+    "passed": true
+  }
+]

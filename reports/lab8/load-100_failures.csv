@@ -1,0 +1,4 @@
+Method,Name,Error,Occurrences,First Seen,Last Seen
+GET,GET cars,HTTPError('500 Server Error: Internal Server Error for url: GET cars'),16,2026-11-20T05:38:15Z,2026-11-20T05:38:15Z
+GET,GET filtered cars,HTTPError('500 Server Error: Internal Server Error for url: GET filtered cars'),7,2026-11-20T05:38:15Z,2026-11-20T05:38:15Z
+GET,GET categories,HTTPError('500 Server Error: Internal Server Error for url: GET categories'),17,2026-11-20T05:38:15Z,2026-11-20T05:38:15Z
