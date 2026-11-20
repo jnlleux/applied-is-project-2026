@@ -10,7 +10,7 @@ import time
 import requests
 import psutil
 
-out=Path('reports/lab8');out.mkdir(parents=True,exist_ok=True)
+out=Path(os.getenv('LOAD_OUTPUT', 'reports/lab8'));out.mkdir(parents=True,exist_ok=True)
 with tempfile.TemporaryDirectory() as tmp:
     env={**os.environ,'DATABASE_URL':'sqlite:///'+tmp+'/load.db'}
     subprocess.run([sys.executable,'seed.py'],env=env,check=True)
@@ -24,7 +24,7 @@ with tempfile.TemporaryDirectory() as tmp:
                 time.sleep(.5)
             else: raise RuntimeError('Backend failed to start')
             process=psutil.Process(server.pid)
-            for users,seconds in [(5,60),(20,120),(50,180),(100,180)]:
+            for users,seconds in ([(100,180)] if os.getenv('LOAD_RECHECK') == '1' else [(5,60),(20,120),(50,180),(100,180)]):
                 print(f'START {users} users / {seconds}s',flush=True)
                 with open(out/f'load-{users}.log','w') as log:
                     locust=subprocess.Popen([sys.executable,'-m','locust','-f','load/locustfile.py','--headless','--host','http://127.0.0.1:18008','-u',str(users),'-r',str(users),'-t',str(seconds)+'s','--csv',str(out/f'load-{users}'),'--html',str(out/f'load-{users}.html'),'--only-summary'],stdout=log,stderr=log)

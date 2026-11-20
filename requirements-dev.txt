@@ -1,4 +1,4 @@
 -r requirements-lock.txt
-locust
-bandit
-psutil
+locust==2.47.0
+bandit==1.9.4
+psutil==7.2.2

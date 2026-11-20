@@ -18,6 +18,7 @@ jobs:
       - run: pip install -r requirements-dev.txt
       - run: mkdir -p reports/lab8
       - run: python -m pytest -v --junitxml=reports/lab8/ci-tests.xml
+      - run: python -m scripts.http_check
       - run: python -m bandit -r app -f json -o reports/lab8/ci-bandit.json
       - run: docker compose config --quiet
       - uses: actions/upload-artifact@v4

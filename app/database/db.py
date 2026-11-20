@@ -1,11 +1,14 @@
 import os
 from pathlib import Path
 from sqlalchemy import event
+from sqlalchemy.pool import NullPool
 from sqlmodel import SQLModel, Session, create_engine
 from app.database import models
 
 DB_PATH = Path(__file__).resolve().parents[2] / "database.db"
-engine = create_engine(os.getenv("DATABASE_URL", f"sqlite:///{DB_PATH}"), echo=os.getenv("SQL_ECHO") == "1", connect_args={"check_same_thread": False, "timeout": 30})
+# File-backed SQLite: avoid QueuePool starvation under concurrent sync requests.
+# Each session opens its own connection and closes it on exit.
+engine = create_engine(os.getenv("DATABASE_URL", f"sqlite:///{DB_PATH}"), echo=os.getenv("SQL_ECHO") == "1", poolclass=NullPool, connect_args={"check_same_thread": False, "timeout": 30})
 
 @event.listens_for(engine, "connect")
 def enable_foreign_keys(connection, _):
