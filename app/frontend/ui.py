@@ -6,6 +6,7 @@ import streamlit as st
 BASE_URL = os.getenv("BACKEND_URL", "http://127.0.0.1:8000")
 st.set_page_config(page_title="AutoRent", page_icon="🚗", layout="wide")
 st.title("🚗 AutoRent — аренда автомобилей")
+st.sidebar.link_button("🚘 Открыть 3D-шоурум", os.getenv("SHOWROOM_URL", "http://127.0.0.1:8000/showroom/"))
 st.sidebar.caption("Лабораторные работы 3–7 • FastAPI + Streamlit")
 
 def api(method, path, **kwargs):

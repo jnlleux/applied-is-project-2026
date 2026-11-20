@@ -1,3 +1,5 @@
+from pathlib import Path
+from fastapi.staticfiles import StaticFiles
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from app.database.db import init_db
@@ -14,3 +16,5 @@ app.include_router(router)
 @app.get("/")
 def root():
     return {"status": "ok", "project": "AutoRent"}
+
+app.mount("/showroom", StaticFiles(directory=Path(__file__).parent / "static/showroom", html=True), name="showroom")

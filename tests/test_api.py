@@ -66,3 +66,12 @@ def test_rental_dates_overlap_and_history(client):
     assert client.get('/rentals/'+str(r.json()['id'])).json()['daily_rate']==20000
     assert client.post('/rentals',json={**payload,'start_date':'2026-11-12','end_date':'2026-11-13'}).status_code==201
     assert client.patch('/rentals/'+str(r.json()['id']),json={'end_date':'2026-11-13'}).status_code==409
+
+
+def test_showroom_assets_and_live_catalog(client):
+    assert client.get('/showroom/').status_code == 200
+    for asset in ['showroom.js', 'style.css', 'campus.js', 'customer3d.js', 'vendor/three.module.min.js', 'vendor/three.core.min.js']:
+        assert client.get('/showroom/' + asset).status_code == 200
+    _, car, _ = setup_data(client)
+    assert client.get('/cars').json()[0]['id'] == car['id']
+    assert client.get('/categories').json()[0]['daily_rate'] == 20000
