@@ -1,0 +1,27 @@
+name: AutoRent quality
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - run: pip install -r requirements-dev.txt
+      - run: mkdir -p reports/lab8
+      - run: python -m pytest -v --junitxml=reports/lab8/ci-tests.xml
+      - run: python -m bandit -r app -f json -o reports/lab8/ci-bandit.json
+      - run: docker compose config --quiet
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: quality-results
+          path: reports/lab8/
