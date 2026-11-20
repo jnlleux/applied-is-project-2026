@@ -9,3 +9,6 @@ __pycache__/
 !.env.example
 .DS_Store
 .pytest_cache/
+
+data/users.json
+reports/lab8/*.db*

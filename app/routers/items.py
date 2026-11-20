@@ -1,3 +1,4 @@
+from app.security import require_admin, require_user
 from fastapi import APIRouter, Depends, HTTPException, Query, Response
 from sqlalchemy import or_, text
 from sqlalchemy.exc import IntegrityError
@@ -20,7 +21,7 @@ def register(path, model, create_schema, patch_schema, search_fields):
         try:
             validated = create_schema.model_validate(data).model_dump()
         except ValidationError as exc:
-            raise HTTPException(422, str(exc))
+            raise HTTPException(422, "Данные не соответствуют схеме")
         refs = {Car: [("category_id", Category)], Rental: [("car_id", Car), ("client_id", Client)]}
         for field, target in refs.get(model, []):
             if session.get(target, validated[field]) is None:
@@ -78,6 +79,14 @@ def register(path, model, create_schema, patch_schema, search_fields):
         session.add(obj); commit(session); session.refresh(obj)
         return obj
 
+    def replace(item_id: int, payload: create_schema, session: Session = Depends(get_session)):
+        session.execute(text("BEGIN IMMEDIATE"))
+        obj = fetch(session, item_id)
+        for key, value in validate(session, payload.model_dump(), item_id).items():
+            setattr(obj, key, value)
+        session.add(obj); commit(session); session.refresh(obj)
+        return obj
+
     def delete(item_id: int, session: Session = Depends(get_session)):
         obj = fetch(session, item_id)
         references = {Category: (Car.category_id,), Car: (Rental.car_id,), Client: (Rental.client_id,)}
@@ -91,10 +100,12 @@ def register(path, model, create_schema, patch_schema, search_fields):
         ("", listing, ["GET"], list[model], 200),
         ("/{item_id}", get_one, ["GET"], model, 200),
         ("", create, ["POST"], model, 201),
+        ("/{item_id}", replace, ["PUT"], model, 200),
         ("/{item_id}", patch, ["PATCH"], model, 200),
         ("/{item_id}", delete, ["DELETE"], None, 204)]:
+        dependencies = [Depends(require_admin)] if methods[0] != "GET" else ([Depends(require_user)] if model in (Client, Rental) else [])
         router.add_api_route(path + suffix, endpoint, methods=methods,
-            response_model=response, status_code=status, tags=[path[1:]], name=methods[0]+path)
+            response_model=response, status_code=status, dependencies=dependencies, tags=[path[1:]], name=methods[0]+path)
 
 register("/categories", Category, CategoryCreate, CategoryPatch, ["name"])
 register("/cars", Car, CarCreate, CarPatch, ["brand", "model", "plate"])

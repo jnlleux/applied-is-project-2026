@@ -9,9 +9,13 @@ st.title("🚗 AutoRent — аренда автомобилей")
 st.sidebar.link_button("🚘 Открыть 3D-шоурум", os.getenv("SHOWROOM_URL", "http://127.0.0.1:8000/showroom/"))
 st.sidebar.caption("Лабораторные работы 3–7 • FastAPI + Streamlit")
 
+login = st.sidebar.text_input("Логин", key="login")
+password = st.sidebar.text_input("Пароль", type="password", key="password")
+st.sidebar.caption("Каталог публичный. Для клиентов и аренды нужен вход; изменения доступны администратору.")
+
 def api(method, path, **kwargs):
     try:
-        response = requests.request(method, BASE_URL + path, timeout=10, **kwargs)
+        response = requests.request(method, BASE_URL + path, timeout=10, auth=(login, password) if login else None, **kwargs)
         if not response.ok:
             st.error(f"Ошибка {response.status_code}: {response.json().get('detail', response.text)}")
             return None

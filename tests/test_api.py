@@ -15,6 +15,8 @@ def client(tmp_path, monkeypatch):
     SQLModel.metadata.create_all(engine)
     def session():
         with Session(engine) as s: yield s
+    from app.security import require_user
+    app.dependency_overrides[require_user] = lambda: {"username":"test-admin", "role":"admin"}
     app.dependency_overrides[get_session] = session
     with TestClient(app) as c: yield c
     app.dependency_overrides.clear()
